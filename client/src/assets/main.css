@@ -322,7 +322,6 @@ Set the default cursor for buttons.
 button,
 [role="button"] {
   cursor: pointer;
-  border-radius: 10px;
 }
 
 /*
@@ -492,14 +491,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .bg-white {
-    background-color: white
-}
-.bg-blue {
-    background-color: #0369a1
-}
-.bg-gray-400 {
   --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 .px-4 {
   padding-left: 1rem;
@@ -528,10 +521,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.bg-blue{
+    background-color: #0284c7;
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
 @media (min-width: 768px) {
 
   .md\:flex {
