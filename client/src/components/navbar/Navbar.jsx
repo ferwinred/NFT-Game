@@ -12,7 +12,7 @@ const Navbar = () => {
             <NavLink to="/">Home</NavLink>
           </button>
           <button className="text-black text-center bg-white px-4 py-2 m-2">
-            <NavLink to="/whitePaper">White Paper</NavLink>
+            <a href="https://cryptomillonarie-game.gitbook.io/crypto-millonaire/">White Paper</a>
           </button>
           <button className="text-black text-center bg-white px-4 py-2 m-2">
             <NavLink to="/game">Play Game</NavLink>
