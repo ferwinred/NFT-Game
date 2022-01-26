@@ -2,7 +2,7 @@ import GameNavbar from "./GameNavBar"
 
 function GameHome() {
     return (
-        <div>
+        <div className="">
             <GameNavbar />
             <h2>game</h2>
         </div>

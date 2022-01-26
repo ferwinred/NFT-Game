@@ -429,9 +429,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .inline-flex {
   display: inline-flex;
 }
-.hidden {
-  display: none;
-}
 .w-full {
   width: 100%;
 }

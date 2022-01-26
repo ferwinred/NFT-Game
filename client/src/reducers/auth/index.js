@@ -2,7 +2,7 @@ import { LOGIN, LOGOUT } from '../../actions/auth';
 
 const initialState = {
     isLogged: false,
-    loading: true,
+    loading: false,
 };
 
 const authReducer = ( state = initialState, action) => {
@@ -12,10 +12,14 @@ const authReducer = ( state = initialState, action) => {
                 ...state,
                 isLogged:true,
                 loading: false,
-            })
+            });
 
         case LOGOUT:
-            return
+            return ({
+                ...state,
+                isLogged:false,
+                loading: false,
+            })
         default:
             return state
     }

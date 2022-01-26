@@ -14,6 +14,7 @@ export const checkLogged = () => (dispatch) => {
   
   // Para iniciar sesion
   export const setLogged = () => (dispatch) => {
+    console.log('paso por aquí')
     return dispatch({
       type: LOGIN,
     })
