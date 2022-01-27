@@ -1,14 +1,8 @@
-// import web3 from 'web3'
-// import detectEthereumProvider from '@metamask/detect-provider';
-import { ethers } from 'ethers';
-// import axios from 'axios';
-// const { REACT_APP_SERVER } = process.env;
-import { users, jwt} from './validate';
 import { setLogged, checkLogged } from '../../../actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
+import { handleVerify, handleSignature, handleAuth, handleUserValidate } from './validate';
 
 
 function Login() {
@@ -21,68 +15,44 @@ function Login() {
 
     useEffect(()=>{
       dispatch(checkLogged())
-      if(isLogged) navigate('/game', {replace: true})
-    }, [dispatch, isLogged, navigate]);
-  
+      // if(isLogged) navigate('/game', {replace: true})
+    }, [dispatch, isLogged]);
+
+   
     const handleClick = async (e) => {
-        // console.log(web3)
 
         //traemos la propiedad ethereum del objeto window
         const {ethereum} = window;
+
       try{
-        //verificamos que este instalado metamask
-        if(!ethereum){
-          //si no esta instalado lanzamos esta alerta
-          alert('Please install MetaMask');
-          return
-        };
+        //verificamos que este instalado metamask y nos traemos la publicAddress
+        const publicAddress = await handleVerify(ethereum);
 
-        //extraemos las Public Address que tenga el usuario
-        const publicAddress = await ethereum.request({ method: 'eth_requestAccounts' });
-        //console.log(publicAddress);
-        console.log('Public Adress: ', publicAddress[0]);
-        
-        //hacemos un get pasandole la public address seleccionada al endpoint users pra traernos al usuario
-        // const user = await axios.get(`${REACT_APP_SERVER}/users/${publicAddress[0]}`)
+        //Validamos si hay algún usuario registrado con esta address, sino se crea el usuario
+        const user = await handleUserValidate(publicAddress);
+        console.log('user-res: ', user)
+        console.log('publicAddress: ', publicAddress)
+        //realizamos la firma del usuario en MetaMask para luego pasarle este dato al JWT
+        const signature = await handleSignature(ethereum, user);
+        console.log('signature: ', signature)
+        //se crea el token en JWT para autenticación y permisos del usuario
+        await handleAuth(publicAddress, signature);
 
-        users.push({ address: publicAddress[0]});
-        // const userReg = user ? user : await axios.post(`${REACT_APP_SERVER}/users`, publicAddress)
-        console.log('users: ', users);
-        const user = users.find(e => e.address === publicAddress[0]);
-        console.log('user: ', user);
+      
 
-        user.nonce=0;
-
-        const nonce = user.nonce;
-       
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        console.log('provider: ', provider);
-
-        const signed = provider.getSigner();
-        console.log('signed: ', signed);
-
-        const signature = await signed.signMessage(`you are logining in Cryptomillionaire with this nonce: ${nonce}`);
-        console.log('signed: ', signature);
-
-        const { token, role, user_id} = jwt(publicAddress[0], signature);
-        console.log('datos para el localstorage: ', token, role, user_id);
-
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', role);
-        localStorage.setItem('user', user_id);
-        
+        //se despacha la action setLogged para logear al usuario en la App
         dispatch(setLogged());
 
+        //se redireccióna al user a la página principal
         navigate('/game', {replace: true});
 
       } catch(err){
-        console.log(err)
+        console.log(err);
         return
-      }
+      };
         
     };
 
-    // console.log('after: ', isLogged)
 
   return (
         <div className="mt-6">

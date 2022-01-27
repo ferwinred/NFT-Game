@@ -1,14 +1,18 @@
+// import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+// import { logout } from '../../actions/auth';
 
 const GameNavbar = () => {
 
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
   const handleClick = (e) => {
     localStorage.removeItem('role');
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    navigate('/', {replace: true})
+    // dispatch(logout());
+    navigate('/', {replace: true});
   }
   console.log(localStorage)
   return (
