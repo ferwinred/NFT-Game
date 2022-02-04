@@ -5,6 +5,15 @@ module.exports = {
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
+    container: {
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      }
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -227,10 +236,6 @@ module.exports = {
       125: '1.25',
       150: '1.5',
       200: '2',
-    },
-    container: {},
-    content: {
-      none: 'none',
     },
     cursor: {
       auto: 'auto',
